@@ -1,0 +1,23 @@
+version: '3.2'
+
+services:
+
+  wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wppw
+      - WORDPRESS_DB_NAME=wpdb
+
+  db:
+    image: mariadb:10
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpw
+      - MYSQL_DATABASE=wpdb
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wppw
