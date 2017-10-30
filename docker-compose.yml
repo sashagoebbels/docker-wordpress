@@ -13,6 +13,8 @@ services:
       - WORDPRESS_DB_USER=wordpress
       - WORDPRESS_DB_PASSWORD=wppw
       - WORDPRESS_DB_NAME=wpdb
+    volumes:
+      - wordpress-logs:/var/log/apache2
 
   db:
     image: mariadb:10
@@ -21,3 +23,15 @@ services:
       - MYSQL_DATABASE=wpdb
       - MYSQL_USER=wordpress
       - MYSQL_PASSWORD=wppw
+
+  elk:
+    image: willdurand/elk
+    ports:
+      - 81:80
+    volumes:
+      - ./elk/logstash:/etc/logstash
+      - ./elk/logstash/patterns:/opt/logstash/patterns
+      - wordpress-logs:/var/log/apache2
+
+volumes:
+  wordpress-logs:
